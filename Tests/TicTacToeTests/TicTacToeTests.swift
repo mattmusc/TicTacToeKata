@@ -39,6 +39,21 @@ final class TicTacToeTests: QuickSpec {
 
     }
 
+    describe("a player") {
+
+      it("can take a field if not already taken") {
+        let config = KataConfig()
+        var emptyGrid = config.createGameGrid()
+
+        do {
+          try emptyGrid.takeField(at: 0, mark: "X")
+        } catch {}
+
+        expect(emptyGrid.grid[0]).to(equal("X"))
+      }
+
+    }
+
     describe("KataConfig") {
 
       it("has width and height equal to 3 and has emptyMark equal to ' '") {

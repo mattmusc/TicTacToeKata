@@ -34,8 +34,8 @@ extension GameGrid {
     return grid.count
   }
 
-  mutating func takeField(index i: Int, mark m: String) throws {
-    guard self.grid[i] != self.emptyMark else {
+  mutating func takeField(at i: Int, mark m: String) throws {
+    guard self.grid[i] == self.emptyMark else {
       throw GameGridError.fieldAlreadyTaken
     }
     self.grid[i] = m
