@@ -33,6 +33,8 @@ final class TicTacToeTests: QuickSpec {
         let game = Game(players: [Player(mark: "X"), Player(mark: "O")])
 
         expect(game.players.count).to(equal(2))
+        expect(game.players[0].mark).to(equal("X"))
+        expect(game.players[1].mark).to(equal("O"))
       }
 
     }
