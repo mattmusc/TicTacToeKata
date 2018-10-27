@@ -34,6 +34,8 @@ extension GameGrid {
     var isTaken = true
 
     for row in 0..<height {
+      
+      isTaken = true
       for col in 0..<width {
         let gridMark = self.at(row: row, col: col)
         
@@ -55,6 +57,8 @@ extension GameGrid {
     var isTaken = true
     
     for col in 0..<width {
+      
+      isTaken = true
       for row in 0..<height {
         let gridMark = self.at(row: row, col: col)
         

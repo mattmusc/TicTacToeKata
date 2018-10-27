@@ -37,7 +37,7 @@ final class TicTacToeTests: QuickSpec {
         expect(game.isOver()).to(equal(true))
       }
 
-      it("is over when all fields in a row are taken by a player") {
+      it("is over when all fields in a row are taken by a player - first row") {
         let config = KataConfig()
 
         let emptyGrid = config.createGameGrid()
@@ -55,6 +55,77 @@ final class TicTacToeTests: QuickSpec {
         expect(game.isOver()).to(equal(true))
       }
 
+      it("is over when all fields in a row are taken by a player - second row") {
+        let config = KataConfig()
+        
+        let emptyGrid = config.createGameGrid()
+        let players = config.createPlayers()
+        
+        var game = Game(grid: emptyGrid, players: players)
+        
+        do {
+          try game.fields.takeField(at: 3, mark: "X")
+          try game.fields.takeField(at: 4, mark: "X")
+          try game.fields.takeField(at: 5, mark: "X")
+          
+        } catch {}
+        
+        expect(game.isOver()).to(equal(true))
+      }
+
+      it("is over when all fields in a row are taken by a player - third row") {
+        let config = KataConfig()
+        
+        let emptyGrid = config.createGameGrid()
+        let players = config.createPlayers()
+        
+        var game = Game(grid: emptyGrid, players: players)
+        
+        do {
+          try game.fields.takeField(at: 6, mark: "X")
+          try game.fields.takeField(at: 7, mark: "X")
+          try game.fields.takeField(at: 8, mark: "X")
+          
+        } catch {}
+        
+        expect(game.isOver()).to(equal(true))
+      }
+      
+      it("is over when all fields in a row are taken by a player - first column") {
+        let config = KataConfig()
+        
+        let emptyGrid = config.createGameGrid()
+        let players = config.createPlayers()
+        
+        var game = Game(grid: emptyGrid, players: players)
+        
+        do {
+          try game.fields.takeField(at: 0, mark: "X")
+          try game.fields.takeField(at: 3, mark: "X")
+          try game.fields.takeField(at: 6, mark: "X")
+          
+        } catch {}
+        
+        expect(game.isOver()).to(equal(true))
+      }
+      
+      it("is over when all fields in a row are taken by a player - 0,4,8 diagonal") {
+        let config = KataConfig()
+        
+        let emptyGrid = config.createGameGrid()
+        let players = config.createPlayers()
+        
+        var game = Game(grid: emptyGrid, players: players)
+        
+        do {
+          try game.fields.takeField(at: 0, mark: "X")
+          try game.fields.takeField(at: 4, mark: "X")
+          try game.fields.takeField(at: 8, mark: "X")
+          
+        } catch {}
+        
+        expect(game.isOver()).to(equal(true))
+      }
     }
 
     describe("players") {

@@ -21,7 +21,17 @@ struct Game {
       if (self.fields.isRowTakenByPlayer(mark: player.mark)) {
         return true
       }
+      
+      if (self.fields.isColumnTakenByPlayer(mark: player.mark)) {
+        return true
+      }
+      
+      if (self.fields.isDiagonalTakenByPlayer(mark: player.mark)) {
+        return true
+      }
+    
     }
+    
     return false
   }
 
