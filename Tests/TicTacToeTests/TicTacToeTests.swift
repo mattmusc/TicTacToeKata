@@ -109,6 +109,30 @@ final class TicTacToeTests: QuickSpec {
         expect(grid.at(row: 0, col: 2)).to(equal("O"))
 
       }
+      
+      it("it has a row taken by a player when all cells in a row have the same symbol") {
+        var grid = GameGrid(width: 3, height: 3, emptyMark: " ")
+        
+        do {
+          try grid.takeField(at: 0, mark: "X")
+          try grid.takeField(at: 1, mark: "X")
+          try grid.takeField(at: 2, mark: "X")
+        } catch {}
+        
+        expect(grid.isRowTakenByPlayer(mark: "X")).to(equal(true))
+      }
+      
+      it("it has no rows taken by a player if there no cells in a row with the same symbol") {
+        var grid = GameGrid(width: 3, height: 3, emptyMark: " ")
+        
+        do {
+          try grid.takeField(at: 0, mark: "O")
+          try grid.takeField(at: 1, mark: "O")
+          try grid.takeField(at: 2, mark: "X")
+        } catch {}
+        
+        expect(grid.isRowTakenByPlayer(mark: "O")).to(equal(false))
+      }
     }
 
     describe("KataConfig") {
