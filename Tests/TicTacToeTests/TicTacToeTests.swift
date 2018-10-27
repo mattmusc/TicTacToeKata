@@ -110,7 +110,7 @@ final class TicTacToeTests: QuickSpec {
 
       }
       
-      it("it has a row taken by a player when all cells in a row have the same symbol") {
+      it("has a row taken by a player when all cells in a row have the same symbol") {
         var grid = GameGrid(width: 3, height: 3, emptyMark: " ")
         
         do {
@@ -122,7 +122,7 @@ final class TicTacToeTests: QuickSpec {
         expect(grid.isRowTakenByPlayer(mark: "X")).to(equal(true))
       }
       
-      it("it has no rows taken by a player if there no cells in a row with the same symbol") {
+      it("has no rows taken by a player if there no cells in a row with the same symbol") {
         var grid = GameGrid(width: 3, height: 3, emptyMark: " ")
         
         do {
@@ -133,6 +133,47 @@ final class TicTacToeTests: QuickSpec {
         
         expect(grid.isRowTakenByPlayer(mark: "O")).to(equal(false))
       }
+      
+      it("has the diagonal 0,0 - 1,1 - 2,2 taken by player") {
+        var grid = GameGrid(width: 3, height: 3, emptyMark: " ")
+        
+        do {
+          try grid.takeField(at: 0, mark: "X")
+          try grid.takeField(at: 1, mark: "O")
+          try grid.takeField(at: 2, mark: "O")
+          
+          try grid.takeField(at: 3, mark: "O")
+          try grid.takeField(at: 4, mark: "X")
+          try grid.takeField(at: 5, mark: "O")
+          
+          try grid.takeField(at: 6, mark: "O")
+          try grid.takeField(at: 7, mark: "O")
+          try grid.takeField(at: 8, mark: "X")
+        } catch {}
+        
+        expect(grid.isDiagonalTakenByPlayer(mark: "X")).to(equal(true))
+      }
+      
+      it("has the diagonal 0,1 - 1,1 - 2,0 taken by player") {
+        var grid = GameGrid(width: 3, height: 3, emptyMark: " ")
+        
+        do {
+          try grid.takeField(at: 0, mark: "O")
+          try grid.takeField(at: 1, mark: "O")
+          try grid.takeField(at: 2, mark: "X")
+          
+          try grid.takeField(at: 3, mark: "O")
+          try grid.takeField(at: 4, mark: "X")
+          try grid.takeField(at: 5, mark: "O")
+          
+          try grid.takeField(at: 6, mark: "X")
+          try grid.takeField(at: 7, mark: "O")
+          try grid.takeField(at: 8, mark: "O")
+        } catch {}
+        
+        expect(grid.isDiagonalTakenByPlayer(mark: "X")).to(equal(true))
+      }
+      
     }
 
     describe("KataConfig") {

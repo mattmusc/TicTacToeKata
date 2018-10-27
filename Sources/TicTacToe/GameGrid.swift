@@ -50,13 +50,42 @@ extension GameGrid {
 
     return isTaken
   }
+  
+  func isColumnTakenByPlayer(mark m: String) -> Bool {
+    var isTaken = true
+    
+    for col in 0..<width {
+      for row in 0..<height {
+        let gridMark = self.at(row: row, col: col)
+        
+        if (gridMark != m) {
+          isTaken = false
+          break
+        }
+      }
+      
+      if (isTaken) {
+        break
+      }
+    }
+    
+    return isTaken
+  }
+  
+  func isDiagonalTakenByPlayer(mark m: String) -> Bool {
+    let numOfRows: [Int] = Array(0..<height)
+    return
+      numOfRows.map { at(row: $0, col: $0 ) }.allSatisfy { $0 == m }
+      ||
+      numOfRows.map { at(row: $0, col: width - $0 - 1 ) }.allSatisfy { $0 == m }
+  }
 
   func count() -> Int {
     return self.grid.count
   }
 
   func at(row r: Int, col c: Int) -> String {
-    return self.grid[r * c + c]
+    return self.grid[r * width + c]
   }
 
   mutating func takeField(at i: Int, mark m: String) throws {
