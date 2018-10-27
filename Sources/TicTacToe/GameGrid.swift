@@ -30,8 +30,33 @@ extension GameGrid {
     return self.grid.filter { $0 == self.emptyMark }.count == 0
   }
 
+  func isRowTakenByPlayer(mark m: String) -> Bool {
+    var isTaken = true
+
+    for row in 0..<height {
+      for col in 0..<width {
+        let gridMark = self.at(row: row, col: col)
+        
+        if (gridMark != m) {
+          isTaken = false
+          break
+        }
+      }
+      
+      if (isTaken) {
+        break
+      }
+    }
+
+    return isTaken
+  }
+
   func count() -> Int {
-    return grid.count
+    return self.grid.count
+  }
+
+  func at(row r: Int, col c: Int) -> String {
+    return self.grid[r * c + c]
   }
 
   mutating func takeField(at i: Int, mark m: String) throws {

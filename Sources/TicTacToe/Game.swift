@@ -1,6 +1,6 @@
 struct Game {
-  let fields: GameGrid
-  let players: [Player]
+  var fields: GameGrid
+  var players: [Player]
 
   init(grid g: GameGrid) {
     self.fields = g
@@ -13,6 +13,16 @@ struct Game {
   }
 
   func isOver() -> Bool {
-    return self.fields.isFull()
+    return self.fields.isFull() || self.isGameWonByAPlayer()
   }
+
+  func isGameWonByAPlayer() -> Bool {
+    for player in players {
+      if (self.fields.isRowTakenByPlayer(mark: player.mark)) {
+        return true
+      }
+    }
+    return false
+  }
+
 }
