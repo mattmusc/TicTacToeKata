@@ -31,57 +31,15 @@ extension GameGrid {
   }
 
   func isRowTakenByPlayer(mark m: String) -> Bool {
-    var isTaken = true
-
-    for row in 0..<height {
-      
-      isTaken = true
-      for col in 0..<width {
-        let gridMark = self.at(row: row, col: col)
-        
-        if (gridMark != m) {
-          isTaken = false
-          break
-        }
-      }
-      
-      if (isTaken) {
-        break
-      }
-    }
-
-    return isTaken
+    return GridCheckingStrategy.Rows.check(grid: self, mark: m)
   }
-  
+
   func isColumnTakenByPlayer(mark m: String) -> Bool {
-    var isTaken = true
-    
-    for col in 0..<width {
-      
-      isTaken = true
-      for row in 0..<height {
-        let gridMark = self.at(row: row, col: col)
-        
-        if (gridMark != m) {
-          isTaken = false
-          break
-        }
-      }
-      
-      if (isTaken) {
-        break
-      }
-    }
-    
-    return isTaken
+    return GridCheckingStrategy.Columns.check(grid: self, mark: m)
   }
-  
+
   func isDiagonalTakenByPlayer(mark m: String) -> Bool {
-    let numOfRows: [Int] = Array(0..<height)
-    return
-      numOfRows.map { at(row: $0, col: $0 ) }.allSatisfy { $0 == m }
-      ||
-      numOfRows.map { at(row: $0, col: width - $0 - 1 ) }.allSatisfy { $0 == m }
+    return GridCheckingStrategy.Diagonal.check(grid: self, mark: m)
   }
 
   func count() -> Int {
