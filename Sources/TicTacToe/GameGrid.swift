@@ -30,15 +30,15 @@ extension GameGrid {
     return self.grid.filter { $0 == self.emptyMark }.count == 0
   }
 
-  func isRowTakenByPlayer(mark m: String) -> Bool {
+  func isRowFilled(mark m: String) -> Bool {
     return GridCheckingStrategy.Rows.check(grid: self, mark: m)
   }
 
-  func isColumnTakenByPlayer(mark m: String) -> Bool {
+  func isColumnFilled(mark m: String) -> Bool {
     return GridCheckingStrategy.Columns.check(grid: self, mark: m)
   }
 
-  func isDiagonalTakenByPlayer(mark m: String) -> Bool {
+  func isDiagonalFilled(mark m: String) -> Bool {
     return GridCheckingStrategy.Diagonal.check(grid: self, mark: m)
   }
 

@@ -1,4 +1,4 @@
-enum GridCheckingStrategy {
+enum GridCheckingStrategy: CaseIterable {
   case Rows
   case Columns
   case Diagonal

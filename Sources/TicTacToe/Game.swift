@@ -13,25 +13,18 @@ struct Game {
   }
 
   func isOver() -> Bool {
-    return self.fields.isFull() || self.isGameWonByAPlayer()
+    return self.fields.isFull() || self.hasWinner()
   }
 
-  func isGameWonByAPlayer() -> Bool {
+  func hasWinner() -> Bool {
     for player in players {
-      if (self.fields.isRowTakenByPlayer(mark: player.mark)) {
-        return true
+      for strategy in GridCheckingStrategy.allCases {
+        if (strategy.check(grid: self.fields, mark: player.mark)) {
+          return true
+        }
       }
-      
-      if (self.fields.isColumnTakenByPlayer(mark: player.mark)) {
-        return true
-      }
-      
-      if (self.fields.isDiagonalTakenByPlayer(mark: player.mark)) {
-        return true
-      }
-    
     }
-    
+
     return false
   }
 
