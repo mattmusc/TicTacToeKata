@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "Mustard",
+        "repositoryURL": "https://github.com/mattmusc/Mustard",
+        "state": {
+          "branch": "master",
+          "revision": "2e2112bd16e6f531f689027e7812b6c16d3d40c0",
+          "version": null
+        }
+      },
+      {
         "package": "Nimble",
         "repositoryURL": "https://github.com/Quick/Nimble.git",
         "state": {
