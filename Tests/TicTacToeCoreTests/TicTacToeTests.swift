@@ -1,7 +1,7 @@
 import Quick
 import Nimble
 
-@testable import TicTacToe
+@testable import TicTacToeCore
 
 final class TicTacToeTests: QuickSpec {
 
