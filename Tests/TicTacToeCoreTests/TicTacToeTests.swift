@@ -29,11 +29,12 @@ final class TicTacToeTests: QuickSpec {
       }
 
       it("is over when all fields are taken") {
-        let game = Game(grid: GameGrid(width: 3, height: 3, emptyMark: " ", grid: [
+        var game = Game(grid: GameGrid(width: 3, height: 3, emptyMark: " ", grid: [
           "X", "O", "O",
           "O", "X", "O",
           "X", "O", "X"]))
-
+        
+        game.update()
         expect(game.isOver()).to(equal(true))
       }
 
@@ -52,6 +53,7 @@ final class TicTacToeTests: QuickSpec {
 
         } catch {}
 
+        game.update()
         expect(game.isOver()).to(equal(true))
       }
 
@@ -70,6 +72,7 @@ final class TicTacToeTests: QuickSpec {
 
         } catch {}
 
+        game.update()
         expect(game.isOver()).to(equal(true))
       }
 
@@ -88,6 +91,7 @@ final class TicTacToeTests: QuickSpec {
 
         } catch {}
 
+        game.update()
         expect(game.isOver()).to(equal(true))
       }
 
@@ -106,6 +110,7 @@ final class TicTacToeTests: QuickSpec {
 
         } catch {}
 
+        game.update()
         expect(game.isOver()).to(equal(true))
       }
 
@@ -124,6 +129,7 @@ final class TicTacToeTests: QuickSpec {
 
         } catch {}
 
+        game.update()
         expect(game.isOver()).to(equal(true))
       }
     }
@@ -249,12 +255,12 @@ final class TicTacToeTests: QuickSpec {
 
     describe("KataConfig") {
 
-      it("has width and height equal to 3 and has emptyMark equal to ' '") {
+      it("has width and height equal to 3 and has emptyMark equal to '_'") {
         let kataConfig = KataConfig()
 
         expect(kataConfig.width).to(equal(3))
         expect(kataConfig.height).to(equal(3))
-        expect(kataConfig.emptyMark).to(equal(" "))
+        expect(kataConfig.emptyMark).to(equal("_"))
       }
 
       it("has 2 players marks, X and O") {

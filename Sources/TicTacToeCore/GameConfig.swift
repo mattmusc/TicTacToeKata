@@ -16,6 +16,6 @@ class GameConfig {
 
 class KataConfig: GameConfig {
   init() {
-    super.init(width: 3, height: 3, players: ["X", "O"], empty: " ")
+    super.init(width: 3, height: 3, players: ["X", "O"], empty: "_")
   }
 }

@@ -1,14 +1,14 @@
 import Mustard
 
 public class TicTacToeApp {
+  let gameManager: GameManager
 
-  public init() {}
+  public init() {
+    self.gameManager = GameManager(config: KataConfig())
+  }
 
   public func start() {
-    if let line = readLine() {
-      let commands = line.components(matchedWith: .letters, .decimalDigits, .letters)
-      print(commands)
-    }
+    self.gameManager.loop()
   }
 }
 

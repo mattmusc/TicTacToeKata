@@ -1,4 +1,4 @@
-struct GameGrid {
+struct GameGrid: CustomStringConvertible {
   let width: Int
   let height: Int
   let emptyMark: String
@@ -18,11 +18,24 @@ struct GameGrid {
     self.grid = g
     self.emptyMark = e
   }
+  
+  var description: String {
+    var s = ""
+    for row in 0..<height {
+      for column in 0..<width {
+        s += " \(at(row: row, col: column)) "
+      }
+      s += "\n"
+    }
+    return s
+  }
 }
 
 enum GameGridError: Error {
   case fieldAlreadyTaken
 }
+
+typealias RowCol = (row: Int, col: Int)
 
 extension GameGrid {
 
@@ -55,6 +68,13 @@ extension GameGrid {
       throw GameGridError.fieldAlreadyTaken
     }
     self.grid[i] = m
+  }
+  
+  mutating func takeField(row r: Int, col c: Int, mark m: String) throws {
+    guard at(row: r, col: c) == self.emptyMark else {
+      throw GameGridError.fieldAlreadyTaken
+    }
+    self.grid[r * width + c] = m
   }
 
 }
