@@ -33,7 +33,7 @@ final class TicTacToeTests: QuickSpec {
           "X", "O", "O",
           "O", "X", "O",
           "X", "O", "X"]))
-        
+
         game.update()
         expect(game.isOver()).to(equal(true))
       }
@@ -181,7 +181,7 @@ final class TicTacToeTests: QuickSpec {
 
       it("can be accessed with the method at(row, col)") {
 
-        var grid = GameGrid(width: 3, height: 3, emptyMark: " ")
+        var grid = GameGrid(width: 3, height: 3, emptyMark: "_")
 
         do {
           try grid.takeField(at: 0, mark: "X")
@@ -196,7 +196,7 @@ final class TicTacToeTests: QuickSpec {
       }
 
       it("has a row taken by a player when all cells in a row have the same symbol") {
-        var grid = GameGrid(width: 3, height: 3, emptyMark: " ")
+        var grid = GameGrid(width: 3, height: 3, emptyMark: "_")
 
         do {
           try grid.takeField(at: 0, mark: "X")
@@ -207,8 +207,20 @@ final class TicTacToeTests: QuickSpec {
         expect(grid.isRowFilled(mark: "X")).to(equal(true))
       }
 
+      it("has a column taken by a player when all cells in a column have the same symbol") {
+        var grid = GameGrid(width: 3, height: 3, emptyMark: "_")
+
+        do {
+          try grid.takeField(at: 0, mark: "X")
+          try grid.takeField(at: 3, mark: "X")
+          try grid.takeField(at: 6, mark: "X")
+        } catch {}
+
+        expect(grid.isColumnFilled(mark: "X")).to(equal(true))
+      }
+
       it("has no rows taken by a player if there no cells in a row with the same symbol") {
-        var grid = GameGrid(width: 3, height: 3, emptyMark: " ")
+        var grid = GameGrid(width: 3, height: 3, emptyMark: "_")
 
         do {
           try grid.takeField(at: 0, mark: "O")
@@ -220,7 +232,7 @@ final class TicTacToeTests: QuickSpec {
       }
 
       it("has the diagonal 0,0 - 1,1 - 2,2 taken by player") {
-        var grid = GameGrid(width: 3, height: 3, emptyMark: " ")
+        var grid = GameGrid(width: 3, height: 3, emptyMark: "_")
 
         do {
           try grid.takeField(at: 0, mark: "X")
@@ -240,7 +252,7 @@ final class TicTacToeTests: QuickSpec {
       }
 
       it("has the diagonal 0,1 - 1,1 - 2,0 taken by player") {
-        var grid = GameGrid(width: 3, height: 3, emptyMark: " ")
+        var grid = GameGrid(width: 3, height: 3, emptyMark: "_")
 
         do {
           try grid.takeField(at: 0, mark: "O")
@@ -259,6 +271,35 @@ final class TicTacToeTests: QuickSpec {
         expect(grid.isDiagonalFilled(mark: "X")).to(equal(true))
       }
 
+      it("has all the grid full") {
+        var grid = GameGrid(width: 3, height: 3, emptyMark: "_")
+
+        do {
+          try grid.takeField(at: 0, mark: "O")
+          try grid.takeField(at: 1, mark: "O")
+          try grid.takeField(at: 2, mark: "X")
+
+          try grid.takeField(at: 3, mark: "O")
+          try grid.takeField(at: 4, mark: "X")
+          try grid.takeField(at: 5, mark: "O")
+
+          try grid.takeField(at: 6, mark: "X")
+          try grid.takeField(at: 7, mark: "O")
+          try grid.takeField(at: 8, mark: "O")
+        } catch {}
+
+        expect(grid.isFull()).to(equal(true))
+      }
+
+      it("has a method description which returns a string with the description of the board") {
+        var grid = GameGrid(width: 1, height: 1, emptyMark: "_")
+
+        do {
+          try grid.takeField(at: 0, mark: "O")
+        } catch {}
+
+        expect(String(describing: grid)).to(equal(" O \n"))
+      }
     }
 
     describe("KataConfig") {
@@ -279,6 +320,46 @@ final class TicTacToeTests: QuickSpec {
         expect(kataConfig.marks[1]).to(equal("O"))
       }
 
+    }
+
+    describe("CommandParser") {
+
+      let parser = CommandParser()
+
+      it("'q' command is Quit command") {
+        let parsed = parser.parse("q")
+        expect(parsed).to(equal(.Quit))
+      }
+
+      it("1 1 is a valid command") {
+        let parsed = parser.parse("1 1")
+        expect(parsed).to(equal(Command.MarkField(row: 1, column: 1)))
+      }
+
+      it("a 1 is an Invalid command") {
+        let parsed = parser.parse("a 1")
+        expect(parsed).to(equal(Command.Invalid))
+      }
+
+      it("1 a is an Invalid command") {
+        let parsed = parser.parse("1 a")
+        expect(parsed).to(equal(Command.Invalid))
+      }
+
+      it("a a is an Invalid command") {
+        let parsed = parser.parse("a a")
+        expect(parsed).to(equal(Command.Invalid))
+      }
+
+      it("1a is an Invalid command") {
+        let parsed = parser.parse("1a")
+        expect(parsed).to(equal(Command.Invalid))
+      }
+
+      it("' ' is a Quit command") {
+        let parsed = parser.parse(" ")
+        expect(parsed).to(equal(Command.Quit))
+      }
     }
 
   }
