@@ -18,7 +18,7 @@ struct GameGrid: CustomStringConvertible {
     self.grid = g
     self.emptyMark = e
   }
-  
+
   var description: String {
     var s = ""
     for row in 0..<height {
@@ -69,7 +69,7 @@ extension GameGrid {
     }
     self.grid[i] = m
   }
-  
+
   mutating func takeField(row r: Int, col c: Int, mark m: String) throws {
     guard at(row: r, col: c) == self.emptyMark else {
       throw GameGridError.fieldAlreadyTaken

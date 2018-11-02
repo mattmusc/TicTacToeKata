@@ -150,7 +150,7 @@ final class TicTacToeTests: QuickSpec {
         it("players take turns taking fields until the game is over") {
 
           expect(gameManager.currentPlayer.mark).to(equal(player1.mark))
-          gameManager.update(command: .MarkField(row: 0, column: 0))
+          gameManager.updateGame(command: .MarkField(row: 0, column: 0))
           expect(gameManager.game.fields.at(row: 0, col: 0)).to(equal(player1.mark))
 
           expect(gameManager.currentPlayer.mark).to(equal(player2.mark))
