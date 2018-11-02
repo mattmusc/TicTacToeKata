@@ -143,7 +143,7 @@ final class TicTacToeTests: QuickSpec {
       let game = Game(grid: gameGrid, players: [player1, player2])
 
       let gameManager = GameManager(game: game)
-      gameManager.printStatements = false
+      gameManager.ui = TestUI()
 
       context("in a game with \(game.players.count) players, \(player1.mark) and \(player2.mark), and a grid \(gameGrid.width)x\(gameGrid.height)") {
 

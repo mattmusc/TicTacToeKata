@@ -1,12 +1,9 @@
 public class GameManager {
   var game: Game
-  var ui: ConsoleUI
+  var ui: GameUI
 
   var currentPlayer: Player
   var currentPlayerIndex = 0
-
-  var quitRequested = false
-  var printStatements = true
 
   private (set) var mark2player: [String: Player]
 
@@ -39,7 +36,6 @@ public class GameManager {
 
   public func loop() {
     repeat {
-
       switch game.state {
 
       case .Welcome:
@@ -47,30 +43,19 @@ public class GameManager {
         self.game.state = .Playing
 
       case .Playing:
-
-          if let line = readLine() {
+          if let line = readLine(strippingNewline: true) {
             let parsed = CommandParser().parse(line)
 
             self.updateGame(command: parsed)
           }
 
-
         self.ui.update(gameManager: self)
 
-      case .Draw:
-        self.ui.update(gameManager: self)
-
-      case .InvalidCommand:
-        self.ui.update(gameManager: self)
-
-      case .Quit:
-        self.ui.update(gameManager: self)
-
-      case .PlayerWon:
+      default:
         self.ui.update(gameManager: self)
       }
 
-    } while !game.isOver() && !quitRequested
+    } while !game.isOver()
   }
 
   public func updateGame(command cmd: Command) {

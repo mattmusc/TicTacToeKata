@@ -33,3 +33,6 @@ class ConsoleUI: GameUI {
   }
 }
 
+class TestUI: GameUI {
+  func update(gameManager manager: GameManager) {}
+}
