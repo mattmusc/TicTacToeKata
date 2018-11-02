@@ -1,5 +1,6 @@
 # TicTacToe
 
+[![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/mathewsanders/Mustard/blob/master/LICENSE)
 [![Swift Package Manager](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-EF5138%20.svg?style=flat)](https://swift.org/package-manager/)
 
 TicTacToe Kata implementation written in Swift.
