@@ -5,6 +5,7 @@ public class GameManager {
   var currentPlayerIndex = 0
   
   var quitRequested = false
+  var printStatements = true
   
   private (set) var mark2player: [String: Player]
   
@@ -21,6 +22,16 @@ public class GameManager {
     }
   }
   
+  init(game g: Game) {
+    self.game = g
+    self.currentPlayer = g.players[currentPlayerIndex]
+
+    self.mark2player = [String: Player]()
+    for player in self.game.players {
+      self.mark2player[player.mark] = player
+    }
+  }
+
   public func loop() {
     welcome(currentPlayer.mark)
     
@@ -29,17 +40,20 @@ public class GameManager {
         let parsed = CommandParser().parse(line)
         
         self.update(command: parsed)
-        self.game.update()
       }
     } while !game.isOver() && !quitRequested
     
-    print("Goodbye")
+    if printStatements {
+      print("Goodbye")
+    }
   }
   
-  func update(command cmd: Command) {
+  public func update(command cmd: Command) {
     switch cmd {
     case .Invalid:
-      print("> Invalid command.")
+      if printStatements {
+        print("> Invalid command.")
+      }
       
     case .Quit:
       quitRequested = true
@@ -52,18 +66,27 @@ public class GameManager {
       switchPlayer(currentPlayerIndex)
     }
     
+    self.game.update()
     afterCommand(currentPlayer.mark)
   }
   
   func afterCommand(_ mark: String) {
     switch game.state {
     case .Playing:
-      print(String(describing: self.game.fields))
-      print("Now it's \(mark) turn.")
+      if !quitRequested {
+        if printStatements {
+          print(String(describing: self.game.fields))
+          print("Now it's \(mark) turn.")
+        }
+      }
     case .Draw:
-      print("It's draw.")
+      if printStatements {
+        print("It's draw.")
+      }
     case .PlayerWon:
-      print("Congratulations \(self.game.winner?.mark ?? ""), you won!")
+      if printStatements {
+        print("Congratulations \(self.game.winner?.mark ?? ""), you won!")
+      }
     }
   }
   
@@ -73,6 +96,8 @@ public class GameManager {
   }
   
   func welcome(_ mark: String) {
-    print("Hi!, Welcome to TicTacToe. You are \(mark). You have a \(game.fields.width)x\(game.fields.height) grid.")
+    if printStatements {
+      print("Hi!, Welcome to TicTacToe. You are \(mark). You have a \(game.fields.width)x\(game.fields.height) grid.")
+    }
   }
 }

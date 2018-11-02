@@ -139,15 +139,23 @@ final class TicTacToeTests: QuickSpec {
       let player1 = Player(mark: "X")
       let player2 = Player(mark: "O")
 
-      let gameGrid = GameGrid(width: 3, height: 3, emptyMark: " ")
-
+      let gameGrid = GameGrid(width: 1, height: 1, emptyMark: " ")
       let game = Game(grid: gameGrid, players: [player1, player2])
 
-      context("in a game with two players, X and O, and a grid 3x3") {
+      let gameManager = GameManager(game: game)
+      gameManager.printStatements = false
+
+      context("in a game with \(game.players.count) players, \(player1.mark) and \(player2.mark), and a grid \(gameGrid.width)x\(gameGrid.height)") {
 
         it("players take turns taking fields until the game is over") {
 
+          expect(gameManager.currentPlayer.mark).to(equal(player1.mark))
+          gameManager.update(command: .MarkField(row: 0, column: 0))
+          expect(gameManager.game.fields.at(row: 0, col: 0)).to(equal(player1.mark))
 
+          expect(gameManager.currentPlayer.mark).to(equal(player2.mark))
+
+          expect(gameManager.game.isOver()).to(equal(true))
         }
 
       }
