@@ -22,16 +22,19 @@ protocol GCStrategy {
   func checkGrid(_ grid: GameGrid, _ mark: String) -> Bool
 }
 
-class RowGCStrategy: GCStrategy {
-
+class AdjacentGCStrategy: GCStrategy {
   func checkGrid(_ grid: GameGrid, _ mark: String) -> Bool {
+    return false
+  }
+
+  func checkGrid(_ grid: GameGrid, _ mark: String, horizontal hor: Bool) -> Bool {
     var isTaken = true
 
     for row in 0..<grid.height {
 
       isTaken = true
       for col in 0..<grid.width {
-        let gridMark = grid.at(row: row, col: col)
+        let gridMark = hor ? grid.at(row: row, col: col) : grid.at(row: col, col: row)
 
         if (gridMark != mark) {
           isTaken = false
@@ -46,38 +49,22 @@ class RowGCStrategy: GCStrategy {
 
     return isTaken
   }
-
 }
 
-class ColumnGCStrategy: GCStrategy {
+class RowGCStrategy: AdjacentGCStrategy {
+  override func checkGrid(_ grid: GameGrid, _ mark: String) -> Bool {
+    return checkGrid(grid, mark, horizontal: true)
+  }
+}
 
-  func checkGrid(_ grid: GameGrid, _ mark: String) -> Bool {
-    var isTaken = true
-
-    for row in 0..<grid.height {
-
-      isTaken = true
-      for col in 0..<grid.width {
-        let gridMark = grid.at(row: col, col: row)
-
-        if (gridMark != mark) {
-          isTaken = false
-          break
-        }
-      }
-
-      if (isTaken) {
-        break
-      }
-    }
-
-    return isTaken
+class ColumnGCStrategy: AdjacentGCStrategy {
+  override func checkGrid(_ grid: GameGrid, _ mark: String) -> Bool {
+    return checkGrid(grid, mark, horizontal: false)
   }
 
 }
 
 class DiagonalGCStrategy: GCStrategy {
-
   func checkGrid(_ grid: GameGrid, _ mark: String) -> Bool {
     let numOfRows: [Int] = Array(0..<grid.height)
     return
