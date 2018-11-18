@@ -30,9 +30,9 @@ final class TicTacToeTests: QuickSpec {
 
       it("is over when all fields are taken") {
         var game = Game(grid: GameGrid(width: 3, height: 3, emptyMark: " ", grid: [
-          "X", "O", "O",
-          "O", "X", "O",
-          "X", "O", "X"]))
+          Field(mark: "X"), Field(mark: "O"), Field(mark: "O"),
+          Field(mark: "O"), Field(mark: "X"), Field(mark: "O"),
+          Field(mark: "X"), Field(mark: "O"), Field(mark: "X")]))
 
         game.update()
         expect(game.isOver()).to(equal(true))
@@ -172,7 +172,7 @@ final class TicTacToeTests: QuickSpec {
           try emptyGrid.takeField(at: 0, mark: "X")
         } catch {}
 
-        expect(emptyGrid.grid[0]).to(equal("X"))
+        expect(emptyGrid.grid[0].mark).to(equal("X"))
       }
 
     }

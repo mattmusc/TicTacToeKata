@@ -1,9 +1,9 @@
-protocol GameUI {
+public protocol GameUI {
   func update(gameManager manager: GameManager)
 }
 
 class ConsoleUI: GameUI {
-  func update(gameManager manager: GameManager) {
+  public func update(gameManager manager: GameManager) {
     let mark = manager.currentPlayer.mark
     let grid = manager.game.fields
 
@@ -33,6 +33,8 @@ class ConsoleUI: GameUI {
   }
 }
 
-class TestUI: GameUI {
-  func update(gameManager manager: GameManager) {}
+public class TestUI: GameUI {
+  public init() {}
+
+  public func update(gameManager manager: GameManager) {}
 }

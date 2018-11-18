@@ -1,18 +1,33 @@
+struct Field {
+  var mark: String { didSet { isMarked = true } }
+  var isMarked = false
+  
+  init(mark m: String) {
+    self.mark = m
+    self.isMarked = true
+  }
+  
+  init(mark m: String, marked isM: Bool) {
+    self.mark = m
+    self.isMarked = isM
+  }
+}
+
 struct GameGrid: CustomStringConvertible {
   let width: Int
   let height: Int
   let emptyMark: String
 
-  var grid: [String]
+  var grid: [Field]
 
   init(width w: Int, height h: Int, emptyMark e: String) {
     self.width = w
     self.height = h
     self.emptyMark = e
-    self.grid = Array(repeating: e, count: w * h)
+    self.grid = Array(repeating: Field(mark: e, marked: false), count: w * h)
   }
 
-  init(width w: Int, height h: Int, emptyMark e: String, grid g: [String]) {
+  init(width w: Int, height h: Int, emptyMark e: String, grid g: [Field]) {
     self.width = w
     self.height = h
     self.grid = g
@@ -40,7 +55,7 @@ typealias RowCol = (row: Int, col: Int)
 extension GameGrid {
 
   func isFull() -> Bool {
-    return self.grid.filter { $0 == self.emptyMark }.count == 0
+    return self.grid.filter { !$0.isMarked }.count == 0
   }
 
   func isRowFilled(mark m: String) -> Bool {
@@ -60,21 +75,26 @@ extension GameGrid {
   }
 
   func at(row r: Int, col c: Int) -> String {
-    return self.grid[r * width + c]
+    return self.grid[r * width + c].mark
   }
 
   mutating func takeField(at i: Int, mark m: String) throws {
-    guard self.grid[i] == self.emptyMark else {
+    guard self.grid[i].mark == self.emptyMark else {
       throw GameGridError.fieldAlreadyTaken
     }
-    self.grid[i] = m
+    self.grid[i].mark = m
   }
 
   mutating func takeField(row r: Int, col c: Int, mark m: String) throws {
     guard at(row: r, col: c) == self.emptyMark else {
       throw GameGridError.fieldAlreadyTaken
     }
-    self.grid[r * width + c] = m
+    self.grid[r * width + c].mark = m
+    
+  }
+  
+  mutating func reset() {
+    grid = Array(repeating: Field(mark: emptyMark, marked: false), count: grid.count)
   }
 
 }

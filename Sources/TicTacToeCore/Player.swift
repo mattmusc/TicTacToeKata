@@ -1,5 +1,5 @@
-struct Player {
-  let mark: String
+public struct Player {
+  public let mark: String
 
   init(mark m: String) {
     self.mark = m
