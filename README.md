@@ -48,3 +48,9 @@ Written in Swift 4.2.
 swift package generate-xcodeproj
 ```
 
+## iOS Application
+
+I've started creating an iOS app.
+
+- [x] Create a view to choose mark for each of the 2 players.
+
